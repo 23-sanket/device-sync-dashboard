@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import DeviceCard from './DeviceCard';
 import DeviceCharts from './DeviceCharts';
 import { Button } from "@/components/ui/button";
-import { toast } from 'sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
@@ -23,20 +22,28 @@ const Dashboard = () => {
 
   const { toast } = useToast();
 
-  // Function to fetch device data
+  // Generate random number within a range
+  const getRandomNumber = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+
+  // Generate simulated device data
+  const generateDeviceData = () => {
+    return [
+      `D1V${getRandomNumber(40, 60)}C${getRandomNumber(15, 30)}T${getRandomNumber(20, 40)}`,
+      `D2V${getRandomNumber(45, 65)}C${getRandomNumber(20, 35)}T${getRandomNumber(25, 45)}`
+    ];
+  };
+
+  // Function to fetch or simulate device data
   const fetchDeviceData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/devices');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      setDevices(data);
+      // In this preview environment, we'll simulate the data instead of fetching from backend
+      const simulatedData = generateDeviceData();
+      setDevices(simulatedData);
       
       // Update device history for charts
-      updateDeviceHistory(data);
+      updateDeviceHistory(simulatedData);
       
       // If was previously in error state
       if (error) {
@@ -50,7 +57,7 @@ const Dashboard = () => {
       
       setLoading(false);
     } catch (err) {
-      setError(`Failed to fetch device data. Make sure the backend server is running. ${err instanceof Error ? err.message : ''}`);
+      setError(`Failed to get device data. ${err instanceof Error ? err.message : ''}`);
       setLoading(false);
     }
   };
