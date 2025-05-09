@@ -1,0 +1,13 @@
+
+{
+  "name": "device-sync-dashboard",
+  "version": "1.0.0",
+  "description": "Desktop application for device monitoring",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^28.0.0"
+  }
+}

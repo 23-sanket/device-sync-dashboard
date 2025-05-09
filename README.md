@@ -1,73 +1,123 @@
-# Welcome to your Lovable project
 
-## Project info
+# Device Sync Dashboard
 
-**URL**: https://lovable.dev/projects/4c25c3ef-2830-46f3-9aff-baa8ec042b8d
+A simple desktop application that simulates live monitoring of two devices (D1 and D2) by reading mock data from a local backend server.
 
-## How can I edit this code?
+## Project Structure
 
-There are several ways of editing your application.
+```
+device-sync-dashboard/
+├── src/
+│   ├── backend/          # Express server for mock data
+│   │   ├── server.js
+│   │   └── package.json
+│   ├── components/       # React components
+│   │   ├── Dashboard.tsx
+│   │   ├── DeviceCard.tsx
+│   │   ├── DeviceChart.tsx
+│   │   └── DeviceCharts.tsx
+│   ├── electron/         # Electron integration
+│   │   ├── main.js
+│   │   └── package.json
+│   └── pages/
+│       ├── Index.tsx     # Main app page
+│       └── NotFound.tsx  # 404 page
+└── README.md
+```
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/4c25c3ef-2830-46f3-9aff-baa8ec042b8d) and start prompting.
+- Real-time device monitoring simulation
+- Display of device data (voltage, current, temperature)
+- Visualization using charts
+- Filter view by device
+- Desktop application via Electron
 
-Changes made via Lovable will be committed automatically to this repo.
+## Installation & Setup
 
-**Use your preferred IDE**
+### 1. Backend Setup
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Navigate to the backend directory and install dependencies:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+```bash
+cd src/backend
+npm install
+```
 
-Follow these steps:
+### 2. Frontend Setup
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+The frontend is already set up with React. Make sure to install all dependencies from the root directory:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+npm install
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+### 3. Electron Setup
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Navigate to the electron directory and install dependencies:
+
+```bash
+cd src/electron
+npm install
+```
+
+## Running the Application
+
+### Step 1: Start the Backend Server
+
+```bash
+cd src/backend
+npm start
+```
+
+This will start the Express server on http://localhost:5000.
+
+### Step 2: Start the React Frontend
+
+From the project root directory:
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+This will start the React development server on http://localhost:3000.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Step 3: Launch as Desktop Application (Optional)
 
-**Use GitHub Codespaces**
+With both the backend and frontend running, open a new terminal:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+cd src/electron
+npm start
+```
 
-## What technologies are used for this project?
+This will launch the application as a desktop app using Electron.
 
-This project is built with:
+## Development Notes
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- The backend generates random values every 2 seconds to simulate device readings
+- The frontend fetches these values and parses them to display in a user-friendly format
+- Data format: "DxVxxCyyTzz" where:
+  - D + number = Device ID (D1 or D2)
+  - V + number = Voltage value
+  - C + number = Current value
+  - T + number = Temperature value
 
-## How can I deploy this project?
+## Troubleshooting
 
-Simply open [Lovable](https://lovable.dev/projects/4c25c3ef-2830-46f3-9aff-baa8ec042b8d) and click on Share -> Publish.
+### Backend Connection Issues
+- Make sure the backend server is running on port 5000
+- Check for any CORS errors in the browser console
+- Verify there are no firewall settings blocking the connection
 
-## Can I connect a custom domain to my Lovable project?
+### Frontend Display Issues
+- Clear browser cache and reload the page
+- Check browser console for any JavaScript errors
 
-Yes, you can!
+### Electron Issues
+- Ensure both the backend and frontend are running before starting Electron
+- Check the Electron logs for any errors
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## License
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+MIT
